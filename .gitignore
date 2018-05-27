@@ -1,0 +1,4 @@
+\.idea
+\.gradle
+\out
+src/main/kotlin/_generated
