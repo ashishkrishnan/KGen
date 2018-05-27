@@ -64,11 +64,19 @@ fun main(args: Array<String>) {
       )
       .build()
 
+  val extensionToTitleCaseFunSpec = FunSpec
+      .builder("toTitleCase")
+      .receiver(String::class)
+      .returns(String::class)
+      .addStatement("return this.toLowerCase().capitalize()")
+      .build()
+
   FileSpec
       .builder(outPackageName, outFileName)
       .addComment("This should be replaced by custom copyright files")
       .addType(sampleClassTypeSpec)
       .addType(personDataClassTypeSpec)
+      .addFunction(extensionToTitleCaseFunSpec)
       .addFunction(mainFunSpec)
       .build()
       .writeTo(OUTPUT_DIR)
