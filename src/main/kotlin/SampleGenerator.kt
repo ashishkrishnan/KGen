@@ -18,6 +18,13 @@ fun main(args: Array<String>) {
     val outFileName    = "Sample"
     val className      = ClassName(packageName = outPackageName, simpleName = outFileName)
 
+  val extensionToTitleCaseFunSpec = FunSpec
+      .builder("toTitleCase")
+      .receiver(String::class)
+      .returns(String::class)
+      .addStatement("return this.toLowerCase().capitalize()")
+      .build()
+
   val sampleClassTypeSpec = TypeSpec.classBuilder(className)
       .primaryConstructor(FunSpec
           .constructorBuilder()
@@ -31,7 +38,7 @@ fun main(args: Array<String>) {
       )
       .addFunction(FunSpec
           .builder("prettyPrint")
-          .addStatement("println(%S)", "\$name")
+          .addStatement("println(%S.%N())", "\$name", extensionToTitleCaseFunSpec)
           .build()
       )
       .build()
@@ -62,13 +69,6 @@ fun main(args: Array<String>) {
               )
               .build()
       )
-      .build()
-
-  val extensionToTitleCaseFunSpec = FunSpec
-      .builder("toTitleCase")
-      .receiver(String::class)
-      .returns(String::class)
-      .addStatement("return this.toLowerCase().capitalize()")
       .build()
 
   FileSpec
